@@ -1,0 +1,20 @@
+{
+  "summary": "Verified demo seed dataset end-to-end. Dr. Rao doctor account and 3 demo patients (Aarav Sharma Low, Priya Menon Moderate, Ramesh Iyer High) all seeded correctly. Backend logins, /api/twin, /api/risk endpoints all return expected data with matching severity tiers. Doctor UI roster shows all 3 with correct risk badges; Open on High-risk patient loads RiskPanel + XAI + VitalsTrend + DigitalTwin editor. Admin regression login still works.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/login dr.rao@healthtwin.ai -> 200, role=doctor, full_name='Dr. Ananya Rao'",
+    "POST /api/auth/login for lowrisk/modrisk/highrisk demo accounts (Demo@123) -> 200",
+    "POST /api/auth/login admin@healthtwin.ai -> 200 (regression)",
+    "GET /api/twin returns profile+vitals(5)+labs(9) for all 3 demo patients",
+    "GET /api/risk severity matches tier: Low=5.2, Moderate=28.8, High=68.7",
+    "UI: Dr. Rao logs in, /doctor roster lists all 3 demo patients with correct risk badges (low/moderate/high) already populated",
+    "UI: Header shows 'Dr. Ananya Rao'",
+    "UI: Clicking Open on Ramesh Iyer (High) renders RiskPanel with 5 disease cards, XAI panel, vitals trend, digital-twin-editor all visible"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Minor recharts console warnings about container width/height (-1) observed but non-blocking; charts still render. Idempotency not directly re-tested at runtime (would require server restart) but existing seed check on email is present per problem statement and no duplicate demo emails observed in roster."
+}

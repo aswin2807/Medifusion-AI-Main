@@ -1,0 +1,19 @@
+{
+  "summary": "Verified registration error-toast fix on /register + regression on /login. Both frontend and backend behave correctly. Duplicate email returns 400 with string detail 'Email already registered' rendered as-is. Pydantic 422 array detail is now joined into a human-readable string ('String should have at least 6 characters') — no [object Object]. Patient and doctor self-registration succeed and redirect to their dashboards. Admin login regression passes.",
+  "tested_scope": ["frontend", "backend", "auth", "integration"],
+  "passed": [
+    "Backend POST /api/auth/register duplicate email -> HTTP 400 {detail:'Email already registered'}",
+    "Backend POST /api/auth/register password<6 -> HTTP 422 with detail as array (Pydantic)",
+    "Frontend /register patient (with age/gender/blood/phone) -> 200, redirect to /patient",
+    "Frontend /register doctor -> 200, redirect to /doctor",
+    "Frontend /register duplicate email (admin@healthtwin.ai) -> toast 'Email already registered' (string, no [object Object], no fallback 'Registration failed')",
+    "Frontend /register short password bypass -> toast 'String should have at least 6 characters' (array joined, no [object Object])",
+    "Frontend /login admin@healthtwin.ai / Admin@123 -> redirect to /admin"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Admin role is intentionally absent from /register role picker — only patient/doctor offered, as documented. Users trying to 'register' admin@healthtwin.ai should instead sign in with seeded creds; the toast now clearly says 'Email already registered' making this discoverable."
+}

@@ -1,0 +1,33 @@
+{
+  "summary": "Regression check on login/register for all three roles (admin/doctor/patient) after login-page error-message improvements. Backend endpoints (/api/auth/login, /api/auth/register) return 200 with { token, user } for all roles; wrong password returns 401 with 'Invalid credentials'. Frontend UI: admin/patient/doctor login through /login redirect correctly to /admin, /patient, /doctor respectively and their dashboards render (stat cards, risk panels, patient roster). UI /register for both patient and doctor auto-signs-in and lands on the correct dashboard. Wrong password stays on /login (no redirect). No blockers found.",
+  "tested_scope": ["frontend", "backend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/login admin -> 200, role=admin, token issued",
+    "POST /api/auth/login wrong-password -> 401 {'detail':'Invalid credentials'}",
+    "POST /api/auth/register patient (with full_name) -> 200 token+role",
+    "POST /api/auth/register doctor -> 200 token+role",
+    "POST /api/auth/login patient/doctor with fresh creds -> 200",
+    "UI: admin login via /login -> /admin dashboard loads (14 users, 9 patients, 4 doctors visible)",
+    "UI: patient login via /login -> /patient dashboard loads (RiskPanel, aggregate score 2.2, HbA1c etc)",
+    "UI: doctor login via /login -> /doctor dashboard loads (patient roster + Invite patient button)",
+    "UI: wrong password on /login stays on /login (no redirect)",
+    "UI: /register (patient role selected) auto-signs-in and redirects to /patient; toast 'Account created — welcome, ...'",
+    "UI: /register (doctor role selected) auto-signs-in and redirects to /doctor",
+    "REACT_APP_BACKEND_URL is present in frontend/.env and API calls resolve to hosted backend (no api.js console.error triggered)"
+  ],
+  "failed": [],
+  "action_items": [
+    "None for auth flow. Optional cleanup: Recharts prints repeated 'width(-1)/height(-1)' warnings on patient/admin dashboards — cosmetic console noise, not a blocker."
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "test_credentials_used": {
+    "admin": "admin@healthtwin.ai / Admin@123 (from /app/memory/test_credentials.md)",
+    "patient_api": "pat_t5_1783071783@test.com / PatPass1 (freshly registered this iteration)",
+    "doctor_api": "doc_t5_1783071783@test.com / DocPass1 (freshly registered this iteration)",
+    "patient_ui_register": "ui_pat_1783071849@test.com / PatPass1",
+    "doctor_ui_register": "ui_doc_1783071852b@test.com / DocPass1"
+  },
+  "notes": "Backend /api/auth/register requires field 'full_name' (not 'name'); the frontend register form already sends the correct field, so UI flow works. If any future client sends 'name', the API responds 422. Not a bug for this iteration since Login.jsx / Register.jsx use the correct schema."
+}

@@ -1,0 +1,26 @@
+{
+  "summary": "First-finish smoke test on HealthTwin.AI. Backend APIs verified (auth register/login, /risk with 5 predictions, /xai/diabetes with shap+lime, RBAC enforced). Frontend verified: landing page loads, admin login redirects to /admin dashboard (stat cards, model chart, users section), patient register redirects to /patient dashboard (aggregate risk, 5 disease cards, 21 twin-field testids, twin-save-btn functional, 5 xai-disease tabs, upload-file-input present), logout clears ht_token and returns to /login, doctor role toggle clickable on /register. All critical MVP flows work.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "GET /api (returns 404 as expected — no root handler; individual routes work)",
+    "POST /api/auth/login admin@healthtwin.ai/Admin@123 → JWT token",
+    "POST /api/auth/register with full_name/email/password/role=patient → JWT token",
+    "GET /api/risk → predictions array (Diabetes, Hypertension, Heart, Kidney, Liver) with contributions",
+    "GET /api/xai/diabetes → shap[] + lime[] arrays",
+    "RBAC: patient token gets 403 on /api/admin/users and /api/patients",
+    "Landing page / renders hero (HealthTwin.AI, aggregate risk demo, digital twin brain)",
+    "Admin login flow → /admin with stat cards (Users/Patients/Doctors/Images/Predictions) + AI model monitoring line chart + Users section + Audit",
+    "Logout clears localStorage ht_token and returns to /login",
+    "Patient register flow → /patient dashboard with 5 disease risk cards, aggregate risk radial, 21 twin-field-* testids, twin-save-btn, 5 xai-disease-* tabs, upload-file-input",
+    "Digital Twin edit + save (twin-field-hba1c edit → twin-save-btn click) succeeded without error",
+    "Doctor role toggle on /register clickable"
+  ],
+  "failed": [],
+  "action_items": [
+    "Optional: register body param is `full_name` (not `name`) — matches backend Pydantic model; frontend correctly submits full_name. Documented."
+  ],
+  "success_rate": {"backend": "100% (6/6 critical checks)", "frontend": "100% (10/10 critical checks)"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Not exhaustively tested (deferred to full agent): image upload E2E with real file, doctor roster/notes flow, /api/interpretation Claude call (fallback acceptable), admin users table role dropdown + enable/disable, timeline UI. Core MVP is ready for first finish."
+}

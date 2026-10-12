@@ -1,0 +1,18 @@
+{
+  "summary": "Backend-only smoke test after README/setup doc fix. Verified backend runs cleanly with pinned requirements.txt (PyJWT 2.13.0, bcrypt 4.1.3, motor 3.3.1, fastapi 0.110.1, reportlab 4.2.5, emergentintegrations 0.2.0 all import). Admin login and JWT auth guards work as expected. No ImportError in supervisor logs.",
+  "tested_scope": ["backend", "auth"],
+  "passed": [
+    "supervisor: backend RUNNING (pid 2787, uptime 24m); no ImportError in /var/log/supervisor/backend.err.log; Application startup complete",
+    "Critical imports resolve: jwt=2.13.0, bcrypt=4.1.3, motor=3.3.1, fastapi=0.110.1, reportlab=4.2.5, emergentintegrations=0.2.0",
+    "POST /api/auth/login (admin@healthtwin.ai / Admin@123) -> HTTP 200 with JWT token and user.role=admin",
+    "GET /api/auth/me without Authorization header -> HTTP 401 (guard works)",
+    "GET /api/auth/me with valid Bearer token -> HTTP 200, returns admin user profile (JWT decode via PyJWT works end-to-end)",
+    "requirements.txt pins pyjwt>=2.10.1 (line 10) — fresh `pip install -r requirements.txt` will resolve user's ModuleNotFoundError: No module named 'jwt'"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "not tested (backend-only scope)"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Response body uses key 'token' (not 'access_token') for the JWT — cosmetic naming difference, not a bug. README fix is verified: dependencies list is complete and correct; user's local ModuleNotFoundError was purely from skipping pip install."
+}

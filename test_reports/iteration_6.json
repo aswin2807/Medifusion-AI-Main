@@ -1,0 +1,19 @@
+{
+  "summary": "Verified customized onboarding across backend and frontend. Patient self-register with age/gender/blood_group/phone seeds twin profile; doctor invite with chosen password logs in with that exact password and seeds twin profile; auto-generate path returns password_was_custom=false; short password returns 400. UI wiring end-to-end verified.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/register (patient, age=42/female/O+/phone) -> 200 and GET /api/twin returns twin.profile={age:42, gender:female, blood_group:O+}",
+    "POST /api/doctor/invite-patient with password=MyChosen1 -> 200, password_was_custom=true, temp_password='MyChosen1'; invited patient logs in with MyChosen1 and twin.profile has age=58/male/B+",
+    "POST /api/doctor/invite-patient without password -> 200, password_was_custom=false, auto-generated temp_password returned",
+    "POST /api/doctor/invite-patient with password='123' -> 400 'Password must be at least 6 characters'",
+    "Frontend /register: patient role shows register-age, register-gender, register-blood, register-phone; doctor role hides age/gender/blood but keeps register-phone",
+    "Frontend patient register + submit auto-signs-in and lands on /patient (age=42 reflected in risk-score reasons; toast 'Account created')",
+    "Frontend Doctor /doctor: open-invite-btn opens invite-patient-modal with invite-password, invite-autopw, invite-age, invite-gender, invite-blood, invite-phone; submitting with chosen password shows invite-result containing 'MyChosen1'"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true,
+  "notes": "Test-script fixes made: correct submit selector is [data-testid=register-submit-btn] and role tabs are [data-testid=role-option-patient|doctor]. Existing doctor dr.demo2@ht.ai / DocPass1 login worked. Patient dashboard shows summary view; DigitalTwin editor fields not opened but backend twin.profile confirmed populated via API."
+}

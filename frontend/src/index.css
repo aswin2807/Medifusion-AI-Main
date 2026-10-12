@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --font-heading: "Chivo", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: #fafaf9; /* stone-50 */
+  color: #1c1917; /* stone-900 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading { font-family: var(--font-heading); letter-spacing: -0.01em; }
+.font-mono, code, kbd, pre, samp { font-family: var(--font-mono); }
+
+/* thin custom scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #e7e5e4; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #d6d3d1; }
+
+/* shadcn theme tokens tuned to clinical palette */
+@layer base {
+  :root {
+    --background: 60 9% 98%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 161 84% 15%;         /* emerald-900 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 60 5% 96%;
+    --secondary-foreground: 20 14.3% 4.1%;
+    --muted: 60 5% 96%;
+    --muted-foreground: 25 5% 45%;
+    --accent: 168 76% 25%;          /* teal */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 6% 90%;
+    --input: 20 6% 90%;
+    --ring: 161 84% 15%;
+    --radius: 0.6rem;
+    --chart-1: 161 84% 15%;
+    --chart-2: 168 76% 35%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 0 84% 60%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+/* subtle grain overlay for landing hero */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.tick-label { font-family: var(--font-mono); font-size: 11px; fill: #57534e; }
+
+/* utility overline text style */
+.overline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #78716c;
+  font-weight: 600;
+}

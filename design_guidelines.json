@@ -1,0 +1,136 @@
+{
+  "theme": "light",
+  "archetype": "1 (Organic & Earthy blended with High-Contrast Clinical)",
+  "design_philosophy": "A highly professional, trustworthy, and data-dense clinical dashboard. Built on the 'Control Room' grid system for maximum scanability. Uses a crisp bone-white base with deep emerald accents to inspire confidence and calm, steering entirely clear of generic tech gradients or overly vibrant hues. Hierarchy is strictly enforced through typography and subtle borders, completely avoiding heavy drop shadows to maintain a sterile, clean, and accurate aesthetic.",
+  "typography": {
+    "font_family": {
+      "heading": "Chivo, sans-serif",
+      "body": "Manrope, sans-serif",
+      "mono": "IBM Plex Mono, monospace"
+    },
+    "scales": {
+      "h1": "text-4xl sm:text-5xl tracking-tight font-black",
+      "h2": "text-2xl sm:text-3xl tracking-tight font-bold",
+      "h3": "text-xl sm:text-2xl tracking-tight font-semibold",
+      "h4": "text-lg font-semibold",
+      "body": "text-sm sm:text-base leading-relaxed",
+      "small": "text-xs font-medium",
+      "overline": "text-[10px] uppercase tracking-[0.2em] font-bold"
+    },
+    "anti_patterns": [
+      "No Inter, Roboto, or standard defaults for headings.",
+      "Never center-align paragraphs or data grids.",
+      "No huge jumps between heading and subheading."
+    ]
+  },
+  "colors": {
+    "background": {
+      "main": "bg-stone-50",
+      "surface": "bg-white",
+      "surface_alt": "bg-stone-100",
+      "overlay": "bg-stone-950/60"
+    },
+    "border": {
+      "default": "border-stone-200",
+      "active": "border-emerald-900",
+      "subtle": "border-stone-100"
+    },
+    "text": {
+      "primary": "text-stone-900",
+      "secondary": "text-stone-500",
+      "muted": "text-stone-400",
+      "inverse": "text-white"
+    },
+    "brand": {
+      "primary": "bg-emerald-900",
+      "primary_hover": "hover:bg-emerald-800",
+      "primary_text": "text-emerald-900",
+      "accent": "bg-teal-700"
+    },
+    "semantic": {
+      "risk_low": {
+        "bg": "bg-emerald-50",
+        "border": "border-emerald-200",
+        "text": "text-emerald-700",
+        "badge": "bg-emerald-100 text-emerald-800"
+      },
+      "risk_moderate": {
+        "bg": "bg-amber-50",
+        "border": "border-amber-200",
+        "text": "text-amber-700",
+        "badge": "bg-amber-100 text-amber-800"
+      },
+      "risk_high": {
+        "bg": "bg-orange-50",
+        "border": "border-orange-200",
+        "text": "text-orange-700",
+        "badge": "bg-orange-100 text-orange-800"
+      },
+      "risk_critical": {
+        "bg": "bg-rose-50",
+        "border": "border-rose-200",
+        "text": "text-rose-700",
+        "badge": "bg-rose-100 text-rose-800"
+      }
+    }
+  },
+  "layout": {
+    "spacing_system": "Generous container padding (p-6, p-8) to let data breathe. Tight gaps (gap-4, gap-6) between related dashboard widgets.",
+    "grid_protocol": "MODE B: 'CONTROL ROOM' GRID for Dashboards. grid-cols-1 md:grid-cols-3 lg:grid-cols-4 or lg:grid-cols-12 for fine-grained spans.",
+    "surfaces": "Cardless or minimal 1px border cards (border border-stone-200 bg-white rounded-xl shadow-sm). NO heavy shadows. Glassmorphism only for sticky headers (backdrop-blur-xl bg-white/80 border-b border-stone-200).",
+    "radius": "rounded-xl for cards, rounded-lg for inputs/buttons, rounded-full for avatars/badges."
+  },
+  "components": {
+    "buttons": "Flat, sharp contrast. Primary: bg-emerald-900 text-white rounded-lg. Secondary: bg-white text-stone-900 border border-stone-200. Always defined hover states.",
+    "cards": "White background, stone-200 border, very subtle shadow-sm. Inner padding typically p-5 or p-6.",
+    "forms": "Inputs use bg-stone-50 or bg-white, border-stone-200, focus:border-emerald-900 focus:ring-1 focus:ring-emerald-900.",
+    "badges": "Pill-shaped (rounded-full), px-2.5 py-0.5, text-xs font-bold. Color maps to semantic risk.",
+    "charts": "Recharts used for SHAP/LIME explainability (horizontal bar charts), timeline trends (line charts for vitals), and probability (radar or donut charts). Monochromatic or semantic colors used for bars."
+  },
+  "visual_enhancers": {
+    "icons": "lucide-react for clinical, thin-line precision.",
+    "motion": "Minimal. framer-motion for smooth tab switching or expanding accordion rows (e.g., patient timeline). No bouncy or playful animations.",
+    "images": "Use realistic medical scans for data panels, professional portraits for user avatars. Digital twin visualization uses a structural 3D human render."
+  },
+  "image_urls": [
+    {
+      "category": "doctor_avatar",
+      "url": "https://images.pexels.com/photos/32160037/pexels-photo-32160037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Portrait of a young male doctor with a stethoscope."
+    },
+    {
+      "category": "patient_avatar",
+      "url": "https://images.unsplash.com/photo-1673865641073-4479f93a7776?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwzfHxwYXRpZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMDY2MDk2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "A woman in clinical setting."
+    },
+    {
+      "category": "chest_xray",
+      "url": "https://images.unsplash.com/photo-1631651363531-fd29aec4cb5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxjaGVzdCUyMHgtcmF5fGVufDB8fHx8MTc4MzA2NjA5Nnww&ixlib=rb-4.1.0&q=85",
+      "description": "X-ray image of a chest."
+    },
+    {
+      "category": "brain_mri",
+      "url": "https://images.unsplash.com/photo-1711409645921-ef3db0501f96?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxicmFpbiUyMG1yaSUyMHNjYW58ZW58MHx8fHwxNzgzMDY2MTAxfDA&ixlib=rb-4.1.0&q=85",
+      "description": "Close up of a human brain MRI on a black background."
+    },
+    {
+      "category": "digital_twin_visual",
+      "url": "https://images.unsplash.com/photo-1763198302243-51142ba5b24a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxodW1hbiUyMGJvZHklMjAzRCUyMG1lZGljYWx8ZW58MHx8fHwxNzgzMDY2MTA2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "X-ray style structural human body."
+    }
+  ],
+  "testing_attributes": {
+    "rules": "All interactive and key informational elements MUST include a data-testid attribute in kebab-case format. Examples: data-testid='login-submit-btn', data-testid='patient-risk-badge', data-testid='upload-lab-report-btn'."
+  },
+  "instructions_to_main_agent": {
+    "routing": "Ensure React Router handles /login, /patient, /doctor, and /admin routes. Use simulated JWT or simple local state auth for role switching.",
+    "dashboards": {
+      "patient": "Build a Digital Twin summary, chronological health timeline, and a section to upload new reports. Show risk metrics in a consumer-friendly way.",
+      "doctor": "Focus on high-density CDSS (Clinical Decision Support System). Build a searchable patient list. The detail view MUST have the Explainable AI (XAI) panel using Recharts to simulate SHAP (feature importance horizontal bars) and LIME (local explanation metrics). Integrate the semantic risk colors actively on this dashboard.",
+      "admin": "Standard data table view for user management and a chart for model monitoring (e.g., AI accuracy over time)."
+    },
+    "styling": "Use pure HTML + Tailwind for complex overlapping grid items where Shadcn cards are too rigid. DO NOT use generic purple/blue gradients. Rely entirely on the stone, emerald, and semantic color scales provided.",
+    "charts": "Extensively use Recharts for the XAI panel and vitals trend lines. Ensure chart tooltips and axes use the mono font (IBM Plex Mono) for a technical feel.",
+    "fonts": "Include the Google Fonts link for Chivo, Manrope, and IBM Plex Mono in index.html and update tailwind.config.js to map them correctly."
+  }
+}

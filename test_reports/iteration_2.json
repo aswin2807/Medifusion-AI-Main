@@ -1,0 +1,34 @@
+{
+  "summary": "Iteration 2 validated the three new features on HealthTwin.AI (password reset, doctor invite, PDF export). Backend: all endpoints working — password-reset/request returns 200 with inline reset_token, password-reset/confirm updates password (verified by subsequent login with new password), doctor invite-patient creates account + returns temp_password (verified: doctor/admin only), /api/reports/risk-pdf?auth=<jwt> returns HTTP 200 with Content-Type application/pdf and %PDF- header (4170 bytes). Frontend: /login has link-forgot → /reset-password, reset flow advances stages, token pre-fills, redirects to /login, new password login succeeds. Doctor invite modal (open-invite-btn → invite-patient-modal → invite-name/email/submit) works and displays temp_password in invite-result. Invited patient can log in immediately with the temp password. Both patient-download-pdf-btn and doctor-download-pdf-btn (via patient detail Open) are present with correct data-testids. ISSUE: Clicking patient-download-pdf-btn fires NO network request or download in Chromium — the downloadRiskPdf() helper creates a detached <a> element and calls click() without appending to document.body, which is unreliable in modern browsers. Same code pattern exists in DoctorDashboard.jsx.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/password-reset/request → 200 with reset_token inline (jane@test.com)",
+    "POST /api/auth/password-reset/confirm → {ok:true}; subsequent login with new password succeeds",
+    "POST /api/auth/register {role:doctor} → JWT token issued (dr.demo2@ht.ai)",
+    "POST /api/doctor/invite-patient (as doctor) → {ok, patient, temp_password}",
+    "GET /api/reports/risk-pdf?auth=<jwt> as patient → HTTP 200, Content-Type application/pdf, 4170 bytes, %PDF- header",
+    "Frontend /login shows Forgot password link (data-testid=link-forgot) navigating to /reset-password",
+    "ResetPassword page: reset-email + reset-request-btn → token auto-fills into reset-token; reset-new-password + reset-confirm-btn → redirect to /login",
+    "Login with newly-set password lands on /patient dashboard",
+    "Doctor login → /doctor patient roster with data-testid=open-invite-btn visible",
+    "InvitePatientModal (invite-patient-modal): invite-name + invite-email + invite-submit-btn → invite-result shows temp password copy box",
+    "Invited patient can log in with the temp password (redirects to /patient)",
+    "data-testid=patient-download-pdf-btn present in patient dashboard header",
+    "data-testid=doctor-download-pdf-btn present in doctor patient detail view (after clicking Open on a roster row)"
+  ],
+  "failed": [
+    {
+      "area": "frontend/patient PDF download",
+      "issue": "Clicking data-testid=patient-download-pdf-btn triggers NO network request to /api/reports/risk-pdf and no browser download event fires. Verified by capturing page.on('request'), page.on('response'), and page.on('download') for 6s after click.",
+      "evidence": "/app/frontend/src/pages/PatientDashboard.jsx lines 16-23: downloadRiskPdf() creates `const a = document.createElement('a')`, sets href/download, then calls `a.click()` WITHOUT appending to document.body. Detached anchor click() is unreliable and often ignored by Chromium for download intents. Same pattern exists in DoctorDashboard.jsx (lines 17-23) so doctor PDF download likely has the same defect (button presence verified, click behavior not exercised).",
+      "priority": "MEDIUM"
+    }
+  ],
+  "action_items": [
+    "In /app/frontend/src/pages/PatientDashboard.jsx (downloadRiskPdf) and /app/frontend/src/pages/DoctorDashboard.jsx (downloadRiskPdf): append the anchor to document.body before .click() and remove it afterwards, e.g. `document.body.appendChild(a); a.click(); a.remove();`. Alternatively use `window.open(url, '_blank')`. Backend endpoint itself is 100% working (verified via curl: HTTP 200, application/pdf, %PDF- header)."
+  ],
+  "success_rate": {"backend": "100% (4/4 new endpoints)", "frontend": "92% (12/13 checks; patient PDF click does not initiate download)"},
+  "retest_needed": true,
+  "full_testing_deferred": true,
+  "notes": "Test credentials updated during run: jane@test.com password is now 'Passw0rd!New9' (memory/test_credentials.md still lists 'Passw0rd' — update recommended after fix). Doctor test account created: dr.demo2@ht.ai / DocPass1."
+}

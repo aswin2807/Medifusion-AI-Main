@@ -1,0 +1,27 @@
+{
+  "summary": "Verified backend password-reset endpoints (request + confirm) return 200 and login with new password works. Verified end-to-end UI reset flow: enter admin email -> token auto-fills -> submit new password -> redirected to /login -> login succeeds. Simulated 404 via network route override; the improved friendly 404 toast did NOT fire because the code's string-detail branch runs before the 404-status branch — the toast displays raw 'Not Found' instead of the intended actionable message.",
+  "tested_scope": ["backend", "frontend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/password-reset/request -> 200 with reset_token (curl verified)",
+    "POST /api/auth/password-reset/confirm -> 200 (curl verified)",
+    "POST /api/auth/login with new password -> 200 (curl verified)",
+    "UI /reset-password: token pre-fills into confirm form after request",
+    "UI reset -> success toast 'Password updated' -> redirect to /login",
+    "UI /login regression: admin logs in and lands on /admin",
+    "Array-detail / network-error branches present in code (not exercised in this run)"
+  ],
+  "failed": [
+    {
+      "area": "frontend/ResetPassword.jsx 404 toast copy",
+      "issue": "Friendly 404 message ('Reset endpoint not found (404). Rebuild the frontend and confirm the backend is up-to-date.') never fires. Branch ordering: `typeof d === 'string'` matches FastAPI's default 404 body `{\"detail\":\"Not Found\"}` first, so the toast displays 'Not Found' instead of the actionable message.",
+      "evidence": "Simulated 404 via page.route override on /api/auth/password-reset/request returning {\"detail\":\"Not Found\"}. Observed sonner toast text = 'Not Found'. Screenshot: .screenshots/reset_404_toast.png",
+      "priority": "MEDIUM"
+    }
+  ],
+  "action_items": [
+    "In /app/frontend/src/pages/ResetPassword.jsx requestToken catch block, reorder branches so `s === 404` is checked BEFORE `typeof d === 'string'` (or additionally treat d === 'Not Found' as 404). Otherwise the newly added user-facing message is unreachable and the original user complaint ('request code failed as 404') is not actually rectified."
+  ],
+  "success_rate": {"backend": "100%", "frontend": "80%"},
+  "retest_needed": true,
+  "full_testing_deferred": true
+}

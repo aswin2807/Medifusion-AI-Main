@@ -1,0 +1,112 @@
+{
+  "diabetes": {
+    "disease": "diabetes",
+    "sample_size": 1000,
+    "positives_count": 328,
+    "negatives_count": 672,
+    "prevalence": 32.8,
+    "confusion_matrix": {
+      "true_positives": 141,
+      "false_positives": 39,
+      "true_negatives": 633,
+      "false_negatives": 187
+    },
+    "metrics": {
+      "accuracy": 77.4,
+      "sensitivity_recall": 42.99,
+      "specificity": 94.2,
+      "precision_ppv": 78.33,
+      "f1_score": 55.51,
+      "roc_auc": 0.8,
+      "brier_score": 0.1853
+    }
+  },
+  "hypertension": {
+    "disease": "hypertension",
+    "sample_size": 1000,
+    "positives_count": 419,
+    "negatives_count": 581,
+    "prevalence": 41.9,
+    "confusion_matrix": {
+      "true_positives": 175,
+      "false_positives": 17,
+      "true_negatives": 564,
+      "false_negatives": 244
+    },
+    "metrics": {
+      "accuracy": 73.9,
+      "sensitivity_recall": 41.77,
+      "specificity": 97.07,
+      "precision_ppv": 91.15,
+      "f1_score": 57.28,
+      "roc_auc": 0.783,
+      "brier_score": 0.2273
+    }
+  },
+  "heart_disease": {
+    "disease": "heart_disease",
+    "sample_size": 1000,
+    "positives_count": 84,
+    "negatives_count": 916,
+    "prevalence": 8.4,
+    "confusion_matrix": {
+      "true_positives": 76,
+      "false_positives": 276,
+      "true_negatives": 640,
+      "false_negatives": 8
+    },
+    "metrics": {
+      "accuracy": 71.6,
+      "sensitivity_recall": 90.48,
+      "specificity": 69.87,
+      "precision_ppv": 21.59,
+      "f1_score": 34.86,
+      "roc_auc": 0.902,
+      "brier_score": 0.1083
+    }
+  },
+  "ckd": {
+    "disease": "ckd",
+    "sample_size": 1000,
+    "positives_count": 251,
+    "negatives_count": 749,
+    "prevalence": 25.1,
+    "confusion_matrix": {
+      "true_positives": 196,
+      "false_positives": 137,
+      "true_negatives": 612,
+      "false_negatives": 55
+    },
+    "metrics": {
+      "accuracy": 80.8,
+      "sensitivity_recall": 78.09,
+      "specificity": 81.71,
+      "precision_ppv": 58.86,
+      "f1_score": 67.12,
+      "roc_auc": 0.894,
+      "brier_score": 0.1254
+    }
+  },
+  "liver_disease": {
+    "disease": "liver_disease",
+    "sample_size": 1000,
+    "positives_count": 273,
+    "negatives_count": 727,
+    "prevalence": 27.3,
+    "confusion_matrix": {
+      "true_positives": 140,
+      "false_positives": 22,
+      "true_negatives": 705,
+      "false_negatives": 133
+    },
+    "metrics": {
+      "accuracy": 84.5,
+      "sensitivity_recall": 51.28,
+      "specificity": 96.97,
+      "precision_ppv": 86.42,
+      "f1_score": 64.37,
+      "roc_auc": 0.859,
+      "brier_score": 0.1409
+    }
+  }
+}
